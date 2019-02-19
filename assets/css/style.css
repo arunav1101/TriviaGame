@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /* background: black; */
+    background-image: url("../images/background-bg.webp");
+}
+
+.row {
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.toprow {
+    width: 100%;
+    margin-left: 150px
+}
+.questionscreen{
+    text-align: center;
+}
+/* Create two equal columns that sits next to each other */
+.column {
+    text-align: center;
+    /* padding: 10px; */
+    width: 70%;
+    float: left; 
+    margin-left: 10px;
+    /* background-color: paleturquoise; */
+    height: auto;
+}
+
+
+h1,
+h4 {
+    width: 70%;
+    /* margin: 10px auto; */
+    color: rgb(171, 109, 233);;
+    /* color: white; */
+    font-family: "Great Vibes", cursive;
+    font-size: 40px;
+    line-height: 120%;
+    font-weight: normal;
+    text-align: left;
+    text-shadow: 0 1px 1px #fff;
+    margin-left:130px;
+}
+h4{
+    color:black;
+    margin-left:50px;
+    font-size: 30px;
+
+}
+
+h4:hover {
+    color:blue;
+    text-align: left;
+    
+}
+
+#topheader{
+    text-align: center;
+    margin-left:150px;
+    margin-bottom: 40px;
+    color:rgb(171, 109, 233);
+}
+.options{
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 20px;
+    /* text-align: center; */
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px;
+    cursor: pointer;
+    /* border-radius: 20%; */
+    width:40%;
+}
+
+#Answer1:hover,#Answer2:hover ,#Answer3:hover ,#Answer4:hover  {
+    background-color:cyan;
+}
