@@ -91,8 +91,13 @@ const questions = [{
 ]
 
 var total = 5,
-    wins = 0;
-    let randomNum;
+    imgCheck = loss = wins = 0;
+let randomNum;
+var number = 3;
+var myRandomNumberArray = [];
+var answerId;
+
+var intervalId;
 
 function resetQScreen() {
     $('.myquestion').remove();
@@ -108,6 +113,7 @@ function questionScreenSetUp(i) {
     $(".mybuttons").append(`<div button class = options id ="ans3"><h4>` + questions[i].ans3 + `</h4></button></div>`)
     $(".mybuttons").append(`<div button class = options id ="ans4"><h4>` + questions[i].ans4 + `</h4></button></div>`)
     console.log('correct answer', questions[i].correctanswer);
+    run();
 }
 
 //   self_player_value = $(this).attr("total-value");
@@ -115,39 +121,103 @@ function questionScreenSetUp(i) {
 function randomnumber(min, max) {
     return (Math.floor(Math.random() * (max - min + 1) + min))
 }
-function winner(answerId){
-wins++;
-$`.${answerId}`.append(`<div><img src="assets/images/qcorrectbig.png"></img></div>`)
+
+function winner(answerId) {
+    wins++;
+    if (imgCheck === 0) {
+        $(`#${answerId}`).append(`<img src= assets/images/qcorrectbig.png width=50px height=30px></img>`)
+        imgCheck++;
+    }
+    displayResults();
+    setTimeout(() => {
+        nextQuestion();
+    }, 1000);
+}
+
+function nextQuestion() {
+    if (total <= 1) {
+        return;
+    }
+    imgCheck = 0;
+    total--;
+
+    // Making sure the Questions are not repeated
+    do {
+        randomNum = randomnumber(1, 5);
+        console.log('generated', randomNum);
+        console.log('Saved', myRandomNumberArray);
+    }
+    while (myRandomNumberArray.includes(randomNum));
+    myRandomNumberArray.push(randomNum);
+    resetQScreen();
+    questionScreenSetUp(randomNum);
+}
+
+function looser(answerId) {
+    if (imgCheck === 0) {
+        $(`#${answerId}`).append(`<img src= assets/images/qincorrectbig.png width=50px height=30px></img>`)
+        imgCheck++;
+    }
+// Displaying the incorrect image for 1 sec
+    setTimeout(() => {
+        nextQuestion();
+    }, 1000);
+    displayResults();
 
 }
-function validateAnswer(userAnswer, i, answerId) {
-    console.log('userAnswer', userAnswer, 'Actual', questions[i].correctanswer,'qselected',i);
-   console.log('wins',wins);
-     userAnswer === questions[i].correctanswer ? winner(answerId) : void 0;
-     
+
+function displayResults() {
+    $('#score').text(`Your Score ${wins} out of 5`);
 }
+
+async function validateAnswer(userAnswer, i, answerId) {
+    console.log('userAnswer', userAnswer, 'Actual', questions[i].correctanswer, 'qselected', i);
+    console.log('wins', wins);
+     await userAnswer === questions[i].correctanswer ? winner(answerId) : looser(answerId);
+ 
+}
+
+
+function run() {
+    if (!intervalId) {
+        intervalId = setInterval(decrement, 1000);
+    }
+}
+
+function decrement() {
+    number--;
+    $("#show-number").html("<h2>" + number + "</h2>");
+    if (number === 0) {
+        stop();
+    //    console.log('After Timer', questions[myRandomNumberArray.pop()].correctanswer);
+        // alert("Time Up!");
+    }
+}
+
+function stop() {
+// $(`#${answerId}`).click();
+
+     clearTimeout(intervalId);
+    // number = 3;
+}
+
+// function findCorrectAnswerDiv(){
+//     let co = questions[myRandomNumberArray.pop()].correctanswer;
+//    let x = $(`div:visible[id*='ans1']`);
+//    console.log(x)
+// }
 
 $(document).ready(function () {
-    randomNum= randomnumber(1, 5);
+
+    randomNum = randomnumber(1, 5);
+    myRandomNumberArray.push(randomNum);
     questionScreenSetUp(randomNum);
+
     $(document.body).on("click", ".mybuttons .options", function () {
-        if(total<1){
-            alert(`Your Score ${wins} out of 5`);
-            return;
-        }
         var userGuess = $(this).text();
-        var answerId= $(this).attr("id");
-        console.log("answerId",answerId);
-        validateAnswer(userGuess, randomNum,answerId);
+           answerId = $(this).attr("id");
+        console.log("answerId", answerId);
+        validateAnswer(userGuess, randomNum, answerId);
         console.log('total', total, 'wins', wins);
-    })
-
-
-    $('#next').on("click", function () {
-        total--;
-        randomNum=randomnumber(1, 5);
-        resetQScreen();
-        questionScreenSetUp(randomNum);
     });
-
 });
