@@ -93,8 +93,8 @@ const questions = [{
 var total = 5,
     imgCheck = loss = wins = 0;
 let randomNum;
-var number = 5;
-var myRandomNumberArray = [];
+var number = 10;
+var myrandomNumberArray = [];
 var answerId;
 
 var intervalId;
@@ -105,20 +105,17 @@ function resetQScreen() {
 }
 
 function questionScreenSetUp(i) {
-    // console.log(i);
     $("#screenquestion")
         .append(`<div class = myquestion><h1>${questions[i].q}</h1></div>`);
     $(".mybuttons").append(`<div button class = options id = "${questions[i].ans1.replace(/\s/g, '')}"><h4>` + questions[i].ans1 + `</h4></button></div>`)
     $(".mybuttons").append(`<div button class = options id = "${questions[i].ans2.replace(/\s/g, '')}"><h4>` + questions[i].ans2 + `</h4></button></div>`)
     $(".mybuttons").append(`<div button class = options id = "${questions[i].ans3.replace(/\s/g, '')}"><h4>` + questions[i].ans3 + `</h4></button></div>`)
     $(".mybuttons").append(`<div button class = options id = "${questions[i].ans4.replace(/\s/g, '')}"><h4>` + questions[i].ans4 + `</h4></button></div>`)
-    // console.log('correct answer', questions[i].correctanswer);
+    $("#show-number").html("<h2>" + number + "</h2>");
     run();
 }
 
-//   self_player_value = $(this).attr("total-value");
-
-function randomnumber(min, max) {
+function randomNumber(min, max) {
     return (Math.floor(Math.random() * (max - min + 1) + min))
 }
 
@@ -136,39 +133,31 @@ function winner(answerId) {
     }, 1000);
 }
 
-function ignoreDuplicates(){
+ function ignoreDuplicates(){
     do {
-        randomNum = randomnumber(1, 5);
-        console.log('generated', randomNum);
-        console.log('Saved', myRandomNumberArray);
+        randomNum = randomNumber(1, 5);
     }
-    while (myRandomNumberArray.includes(randomNum));
+    while (myrandomNumberArray.includes(randomNum));
   
-    myRandomNumberArray.push(randomNum);
-
-    return myRandomNumberArray;
+    myrandomNumberArray.push(randomNum);
+    return randomNum;
 }
 
 
 function nextQuestion() {
-    console.log('Start of next Question',myRandomNumberArray);
     if (total <= 1) {
         return;
     }
     imgCheck = 0;
     total--;
-
-    // Making sure the Questions are not repeated
-    let check = ignoreDuplicates();
     resetQScreen();
-    console.log('myRandomNumberArray',check);
-    questionScreenSetUp(randomNum);
+    questionScreenSetUp(ignoreDuplicates());
     run();
 }
 
 function looser(answerId) {
     if (imgCheck === 0) {
-        $(`#${answerId}`).append(`<img src= assets/images/qincorrectbig.png width=50px height=30px></img>`)
+        $(`#${answerId}`).append(`<img src= assets/images/qincorrectbig.png width=50px height=30px>`)
         imgCheck++;
     }
     // Displaying the incorrect image for 1 sec
@@ -184,15 +173,13 @@ function displayResults() {
 }
 
 async function validateAnswer(userAnswer, i, answerId) {
-    // console.log('userAnswer', userAnswer, 'Actual', questions[i].correctanswer, 'qselected', i);
-    // console.log('wins', wins);
     await userAnswer === questions[i].correctanswer ? winner(answerId) : looser(answerId);
 
 }
 
 function run() {
     clearInterval(intervalId);
-    number = 5;
+    number = 11;
     intervalId = setInterval(decrement, 1000);
 }
 
@@ -211,24 +198,23 @@ function stop() {
 }
 
 function findCorrectAnswerDiv() {
-    let correctAnswerId = questions[myRandomNumberArray.pop()].correctanswer.replace(/\s/g, '');
+    let correctAnswerId = questions[myrandomNumberArray.pop()].correctanswer.replace(/\s/g, '');
     document.getElementById(`${correctAnswerId}`).click();
 }
 
 $(document).ready(function () {
 
-    randomNum = randomnumber(1, 5);
+    randomNum = randomNumber(1, 5);
 console.log('start',randomNum);
-    myRandomNumberArray.push(randomNum);
-    console.log('first time',myRandomNumberArray)
+    myrandomNumberArray.push(randomNum);
+
+    console.log('first time',myrandomNumberArray[0])
 
     questionScreenSetUp(randomNum);
 
     $(document.body).on("click", ".mybuttons .options", function () {
         var userGuess = $(this).text();
         answerId = $(this).attr("id");
-        // console.log("answerId", answerId);
         validateAnswer(userGuess, randomNum, answerId);
-        // console.log('total', total, 'wins', wins);
     });
 });
