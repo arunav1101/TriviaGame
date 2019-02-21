@@ -32,6 +32,20 @@ body {
 }
 
 
+#score, #show-number{
+    width: 70%;
+    /* margin: 10px auto; */
+    color: rgb(171, 109, 233);;
+    /* color: white; */
+    font-family: "Great Vibes", cursive;
+    font-size: 40px;
+    line-height: 120%;
+    font-weight: normal;
+    text-align: left;
+    text-shadow: 0 1px 1px #fff;
+    margin-left:130px;
+}
+
 h1,
 h4 {
     width: 70%;

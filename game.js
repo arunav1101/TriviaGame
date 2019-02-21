@@ -108,10 +108,10 @@ function questionScreenSetUp(i) {
     console.log(i);
     $("#screenquestion")
         .append(`<div class = myquestion><h1>${questions[i].q}</h1></div>`);
-    $(".mybuttons").append(`<div button class = options id ="ans1"><h4>` + questions[i].ans1 + `</h4></button></div>`)
-    $(".mybuttons").append(`<div button class = options id ="ans2"><h4>` + questions[i].ans2 + `</h4></button></div>`)
-    $(".mybuttons").append(`<div button class = options id ="ans3"><h4>` + questions[i].ans3 + `</h4></button></div>`)
-    $(".mybuttons").append(`<div button class = options id ="ans4"><h4>` + questions[i].ans4 + `</h4></button></div>`)
+    $(".mybuttons").append(`<div button class = options id =${questions[i].ans1}><h4>` + questions[i].ans1 + `</h4></button></div>`)
+    $(".mybuttons").append(`<div button class = options id =${questions[i].ans2}><h4>` + questions[i].ans2 + `</h4></button></div>`)
+    $(".mybuttons").append(`<div button class = options id =${questions[i].ans3}><h4>` + questions[i].ans3 + `</h4></button></div>`)
+    $(".mybuttons").append(`<div button class = options id =${questions[i].ans4}><h4>` + questions[i].ans4 + `</h4></button></div>`)
     console.log('correct answer', questions[i].correctanswer);
     run();
 }
@@ -123,7 +123,9 @@ function randomnumber(min, max) {
 }
 
 function winner(answerId) {
+    if(number !==0){
     wins++;
+    }
     if (imgCheck === 0) {
         $(`#${answerId}`).append(`<img src= assets/images/qcorrectbig.png width=50px height=30px></img>`)
         imgCheck++;
@@ -158,7 +160,7 @@ function looser(answerId) {
         $(`#${answerId}`).append(`<img src= assets/images/qincorrectbig.png width=50px height=30px></img>`)
         imgCheck++;
     }
-// Displaying the incorrect image for 1 sec
+    // Displaying the incorrect image for 1 sec
     setTimeout(() => {
         nextQuestion();
     }, 1000);
@@ -173,8 +175,8 @@ function displayResults() {
 async function validateAnswer(userAnswer, i, answerId) {
     console.log('userAnswer', userAnswer, 'Actual', questions[i].correctanswer, 'qselected', i);
     console.log('wins', wins);
-     await userAnswer === questions[i].correctanswer ? winner(answerId) : looser(answerId);
- 
+    await userAnswer === questions[i].correctanswer ? winner(answerId) : looser(answerId);
+
 }
 
 
@@ -188,34 +190,37 @@ function decrement() {
     number--;
     $("#show-number").html("<h2>" + number + "</h2>");
     if (number === 0) {
+
         stop();
-    //    console.log('After Timer', questions[myRandomNumberArray.pop()].correctanswer);
+        findCorrectAnswerDiv();
+        //    console.log('After Timer', questions[myRandomNumberArray.pop()].correctanswer);
         // alert("Time Up!");
     }
 }
 
 function stop() {
-// $(`#${answerId}`).click();
+    // $(`#${answerId}`).click();
 
-     clearTimeout(intervalId);
+    clearTimeout(intervalId);
     // number = 3;
 }
 
-// function findCorrectAnswerDiv(){
-//     let co = questions[myRandomNumberArray.pop()].correctanswer;
-//    let x = $(`div:visible[id*='ans1']`);
-//    console.log(x)
-// }
+function findCorrectAnswerDiv() {
+    let correctAnswerId = questions[myRandomNumberArray.pop()].correctanswer;
+     document.getElementById(`${correctAnswerId}`).click();
+}
 
 $(document).ready(function () {
 
     randomNum = randomnumber(1, 5);
+
     myRandomNumberArray.push(randomNum);
+
     questionScreenSetUp(randomNum);
 
     $(document.body).on("click", ".mybuttons .options", function () {
         var userGuess = $(this).text();
-           answerId = $(this).attr("id");
+        answerId = $(this).attr("id");
         console.log("answerId", answerId);
         validateAnswer(userGuess, randomNum, answerId);
         console.log('total', total, 'wins', wins);
