@@ -93,7 +93,7 @@ const questions = [{
 var total = 5,
     imgCheck = loss = wins = 0;
 let randomNum;
-var number = 10;
+var number = 5;
 var myrandomNumberArray = [];
 var answerId;
 
@@ -102,16 +102,22 @@ var intervalId;
 function resetQScreen() {
     $('.myquestion').remove();
     $('.options').remove();
+    $('#result-section').remove();
 }
 
 function questionScreenSetUp(i) {
     $("#screenquestion")
         .append(`<div class = myquestion><h1>${questions[i].q}</h1></div>`);
-    $(".mybuttons").append(`<div button class = options id = "${questions[i].ans1.replace(/\s/g, '')}"><h4>` + questions[i].ans1 + `</h4></button></div>`)
-    $(".mybuttons").append(`<div button class = options id = "${questions[i].ans2.replace(/\s/g, '')}"><h4>` + questions[i].ans2 + `</h4></button></div>`)
-    $(".mybuttons").append(`<div button class = options id = "${questions[i].ans3.replace(/\s/g, '')}"><h4>` + questions[i].ans3 + `</h4></button></div>`)
-    $(".mybuttons").append(`<div button class = options id = "${questions[i].ans4.replace(/\s/g, '')}"><h4>` + questions[i].ans4 + `</h4></button></div>`)
-    $("#show-number").html("<h2>" + number + "</h2>");
+    $(".mybuttons")
+        .append(`<div button class = options id = "${questions[i].ans1.replace(/\s/g, '')}"><h4>` + questions[i].ans1 + `</h4></button></div>`)
+    $(".mybuttons")
+        .append(`<div button class = options id = "${questions[i].ans2.replace(/\s/g, '')}"><h4>` + questions[i].ans2 + `</h4></button></div>`)
+    $(".mybuttons")
+        .append(`<div button class = options id = "${questions[i].ans3.replace(/\s/g, '')}"><h4>` + questions[i].ans3 + `</h4></button></div>`)
+    $(".mybuttons")
+        .append(`<div button class = options id = "${questions[i].ans4.replace(/\s/g, '')}"><h4>` + questions[i].ans4 + `</h4></button></div>`)
+    $("#show-number")
+        .html("<h2>" + number + "</h2>");
     run();
 }
 
@@ -124,7 +130,8 @@ function winner(answerId) {
         wins++;
     }
     if (imgCheck === 0) {
-        $(`#${answerId}`).append(`<img src= assets/images/qcorrectbig.png width=50px height=30px></img>`)
+        $(`#${answerId}`).css("background-color", "Green");
+        $(`#show-results`).append(`<img id ="result-section" src= assets/images/qcorrectbig.png></img>`)
         imgCheck++;
     }
     displayResults();
@@ -133,18 +140,18 @@ function winner(answerId) {
     }, 1000);
 }
 
- function ignoreDuplicates(){
+function ignoreDuplicates() {
     do {
         randomNum = randomNumber(1, 5);
     }
     while (myrandomNumberArray.includes(randomNum));
-  
     myrandomNumberArray.push(randomNum);
     return randomNum;
 }
 
 
 function nextQuestion() {
+    $('#result-section').attr("src", "");
     if (total <= 1) {
         return;
     }
@@ -157,7 +164,9 @@ function nextQuestion() {
 
 function looser(answerId) {
     if (imgCheck === 0) {
-        $(`#${answerId}`).append(`<img src= assets/images/qincorrectbig.png width=50px height=30px>`)
+        $(`#${answerId}`).css("background-color", "Red");
+        $(`#show-results`).append(`<img id ="result-section" src= assets/images/qincorrectbig.png></img>`);
+        findCorrectAnswerDiv();
         imgCheck++;
     }
     // Displaying the incorrect image for 1 sec
@@ -171,18 +180,14 @@ function looser(answerId) {
 function displayResults() {
     $('#score').text(`Your Score ${wins} out of 5`);
 }
-
 async function validateAnswer(userAnswer, i, answerId) {
     await userAnswer === questions[i].correctanswer ? winner(answerId) : looser(answerId);
-
 }
-
 function run() {
     clearInterval(intervalId);
-    number = 11;
+    number = 5;
     intervalId = setInterval(decrement, 1000);
 }
-
 
 function decrement() {
     number--;
@@ -199,16 +204,19 @@ function stop() {
 
 function findCorrectAnswerDiv() {
     let correctAnswerId = questions[myrandomNumberArray.pop()].correctanswer.replace(/\s/g, '');
-    document.getElementById(`${correctAnswerId}`).click();
+    document.getElementById(`${correctAnswerId}`).setAttribute("style","background-color:green")
+    setTimeout(function(){
+        nextQuestion();
+    }, 1000);
 }
 
 $(document).ready(function () {
 
     randomNum = randomNumber(1, 5);
-console.log('start',randomNum);
+    console.log('start', randomNum);
     myrandomNumberArray.push(randomNum);
 
-    console.log('first time',myrandomNumberArray[0])
+    console.log('first time', myrandomNumberArray[0])
 
     questionScreenSetUp(randomNum);
 
