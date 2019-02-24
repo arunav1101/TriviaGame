@@ -4,10 +4,10 @@
 
 body {
     /* background: black; */
- background: url("https://wallpaperbrowse.com/media/images/purple-background-of-colorful-triangles_23-2147616335.jpg");
-     /* background-repeat: no-repeat; */ 
+    background: url("https://wallpaperbrowse.com/media/images/purple-background-of-colorful-triangles_23-2147616335.jpg") no-repeat fixed center;
+    /* background-repeat: no-repeat; */
     background-size: cover;
-    text-align:center;
+    text-align: center;
 }
 
 .row {
@@ -20,23 +20,27 @@ body {
     width: 100%;
     margin-left: 150px
 }
-.questionscreen{
+
+.questionscreen {
     text-align: center;
     margin-left: 200px;
 }
+
 /* Create two equal columns that sits next to each other */
 .column {
     text-align: center;
     width: 70%;
-    float: left; 
+    float: left;
     margin-left: 200px;
     height: auto;
 }
+
 /* .container{
     background: green;
 } */
 
-#score, #show-number{
+#score,
+#show-number {
     width: 70%;
     color: rgb(171, 109, 233);
     font-family: "Great Vibes", cursive;
@@ -45,28 +49,30 @@ body {
     font-weight: normal;
     text-align: left;
     text-shadow: 0 1px 1px #fff;
-    margin-left:130px;
+    margin-left: 130px;
 }
 
-#show-number{
-    
+#show-number {
+
     width: 100px;
     text-align: center;
     background-color: rgba(226, 230, 8, 0.109);
-    margin-left:800px;
+    margin-left: 800px;
     border-radius: 60%
 }
-#show-results{
-    position:absolute;
-    margin-left:500px;
-    text-align:center;
+
+#show-results {
+    position: absolute;
+    margin-left: 500px;
+    text-align: center;
 }
 
 h1,
 h4 {
     width: 70%;
     /* margin: 10px auto; */
-    color: rgb(171, 109, 233);;
+    color: rgb(171, 109, 233);
+    ;
     /* color: white; */
     font-family: "Great Vibes", cursive;
     font-size: 40px;
@@ -74,21 +80,21 @@ h4 {
     font-weight: normal;
     text-align: left;
     text-shadow: 0 1px 1px #fff;
-    margin-left:130px;
+    margin-left: 130px;
 }
 
-#final-results{
-    position:relative;
-    margin-left:300px;
-    margin-right:300px;
-    text-align:center;
-    background:yellowgreen;
+#final-results {
+    position: relative;
+    margin-left: 300px;
+    margin-right: 300px;
+    text-align: center;
+    background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnDZfEcVVYf9XqYu9qZ1e6KCEgMeE8FVDsoC17aH9ZDHGfbmZX6g");
     color: rgb(25, 23, 27);
-    }
+}
 
-h4{
-    color:white;
-    margin-left:50px;
+h4 {
+    color: white;
+    margin-left: 50px;
     font-size: 30px;
 
 }
@@ -96,16 +102,18 @@ h4{
 h4:hover {
     color: green;
     text-align: left;
-    
+
 }
 
-#topheader{
+#topheader {
     text-align: center;
-    margin-left:150px;
+    margin-left: 150px;
     margin-bottom: 40px;
-    color:rgb(171, 109, 233);
+    color: rgb(171, 109, 233);
 }
-.options,#restart{
+
+.options,
+#restart {
     /* position:absolute; */
     background-color: blue;
     border: none;
@@ -118,9 +126,10 @@ h4:hover {
     margin: 4px;
     cursor: pointer;
     /* border-radius: 20%; */
-    width:40%;
+    width: 40%;
 }
-.options:hover{
-    background-color:cyan;
+
+.options:hover {
+    background-color: cyan;
     color: black;
 }
