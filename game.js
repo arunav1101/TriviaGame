@@ -94,7 +94,7 @@ var total,
     totalQuestions,
     imgCheck,
     loss,
-    notAnswer;
+    notAnswer,
     wins,
     randomNum,
     number,
@@ -138,7 +138,7 @@ function winner(answerId) {
         imgCheck++;
     }
     displayResults();
-   
+
     setTimeout(() => {
         nextQuestion();
     }, 1000);
@@ -159,8 +159,8 @@ function nextQuestion() {
     if (total < 1) {
         $('#score').empty();
         // $('.myquestion').hide();
-    // $('.options').hide();
-    // $('#result-section').hide(); 
+        // $('.options').hide();
+        // $('#result-section').hide(); 
         resetQScreen();
         console.log(total);
         $('#final-results').empty();
@@ -201,7 +201,7 @@ function displayResults() {
     $('#score').text(`Your Score ${wins} out of ${totalQuestions}`);
 }
 async function validateAnswer(userAnswer, i, answerId) {
-    console.log('total',total);
+    console.log('total', total);
     total--;
     await userAnswer === questions[i].correctanswer ? winner(answerId) : looser(answerId);
 }
@@ -239,7 +239,7 @@ function preset() {
     totalQuestions = total;
     imgCheck = 0;
     loss = 0;
-    notAnswer=0;
+    notAnswer = 0;
     wins = 0;
     number = 5;
     myrandomNumberArray = [];
