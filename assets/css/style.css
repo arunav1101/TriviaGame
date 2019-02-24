@@ -4,9 +4,10 @@
 
 body {
     /* background: black; */
-    /* background: url("https://www.newjerseywines.com/wp-content/uploads/2019/01/TriviaNight.jpg");
-    /* background-repeat: no-repeat; */
-    background-size: auto;
+ background: url("https://wallpaperbrowse.com/media/images/purple-background-of-colorful-triangles_23-2147616335.jpg");
+     /* background-repeat: no-repeat; */ 
+    background-size: cover;
+    text-align:center;
 }
 
 .row {
@@ -21,19 +22,23 @@ body {
 }
 .questionscreen{
     text-align: center;
+    margin-left: 200px;
 }
 /* Create two equal columns that sits next to each other */
 .column {
     text-align: center;
     width: 70%;
     float: left; 
-    margin-left: 10px;
+    margin-left: 200px;
     height: auto;
 }
+/* .container{
+    background: green;
+} */
 
 #score, #show-number{
     width: 70%;
-    color: rgb(171, 109, 233);;
+    color: rgb(171, 109, 233);
     font-family: "Great Vibes", cursive;
     font-size: 40px;
     line-height: 120%;
@@ -53,9 +58,10 @@ body {
 }
 #show-results{
     position:absolute;
-    margin-left:300px;
+    margin-left:500px;
     text-align:center;
 }
+
 h1,
 h4 {
     width: 70%;
@@ -70,6 +76,15 @@ h4 {
     text-shadow: 0 1px 1px #fff;
     margin-left:130px;
 }
+
+#final-results{
+    position:relative;
+    margin-left:300px;
+    margin-right:300px;
+    text-align:center;
+    background:yellowgreen;
+    color: rgb(25, 23, 27);
+    }
 
 h4{
     color:white;
@@ -90,7 +105,7 @@ h4:hover {
     margin-bottom: 40px;
     color:rgb(171, 109, 233);
 }
-.options{
+.options,#restart{
     /* position:absolute; */
     background-color: blue;
     border: none;

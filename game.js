@@ -90,14 +90,17 @@ const questions = [{
     validateAnswer
 ]
 
-var total = 5,
-    imgCheck = loss = wins = 0;
-let randomNum;
-var number = 5;
-var myrandomNumberArray = [];
-var answerId;
-
-var intervalId;
+var total,
+    totalQuestions,
+    imgCheck,
+    loss,
+    notAnswer;
+    wins,
+    randomNum,
+    number,
+    myrandomNumberArray,
+    answerId,
+    intervalId;
 
 function resetQScreen() {
     $('.myquestion').remove();
@@ -135,6 +138,7 @@ function winner(answerId) {
         imgCheck++;
     }
     displayResults();
+   
     setTimeout(() => {
         nextQuestion();
     }, 1000);
@@ -152,17 +156,33 @@ function ignoreDuplicates() {
 
 function nextQuestion() {
     $('#result-section').attr("src", "");
-    if (total <= 1) {
-        return;
+    if (total < 1) {
+        $('#score').empty();
+        // $('.myquestion').hide();
+    // $('.options').hide();
+    // $('#result-section').hide(); 
+        resetQScreen();
+        console.log(total);
+        $('#final-results').empty();
+        $('#final-results').append(`<div>
+        <p>
+        <h1>Your Correct Answers :${wins}</h1>
+        <h1>Your Incorrect Answers : ${loss}</h1>
+        <h1>You Missed  : ${notAnswer}</h1>
+        </p>
+        <h1>Your Score ${wins} out of ${totalQuestions}</h1>
+        <button id=restart>Reset</button>
+        </div>`)
+        return 0;
     }
     imgCheck = 0;
-    total--;
     resetQScreen();
     questionScreenSetUp(ignoreDuplicates());
     run();
 }
 
 function looser(answerId) {
+    loss++;
     if (imgCheck === 0) {
         $(`#${answerId}`).css("background-color", "Red");
         $(`#show-results`).append(`<img id ="result-section" src= assets/images/qincorrectbig.png></img>`);
@@ -178,11 +198,14 @@ function looser(answerId) {
 }
 
 function displayResults() {
-    $('#score').text(`Your Score ${wins} out of 5`);
+    $('#score').text(`Your Score ${wins} out of ${totalQuestions}`);
 }
 async function validateAnswer(userAnswer, i, answerId) {
+    console.log('total',total);
+    total--;
     await userAnswer === questions[i].correctanswer ? winner(answerId) : looser(answerId);
 }
+
 function run() {
     clearInterval(intervalId);
     number = 5;
@@ -195,6 +218,7 @@ function decrement() {
     if (number === 0) {
         stop();
         findCorrectAnswerDiv();
+        total--;
     }
 }
 
@@ -204,25 +228,39 @@ function stop() {
 
 function findCorrectAnswerDiv() {
     let correctAnswerId = questions[myrandomNumberArray.pop()].correctanswer.replace(/\s/g, '');
-    document.getElementById(`${correctAnswerId}`).setAttribute("style","background-color:green")
-    setTimeout(function(){
+    document.getElementById(`${correctAnswerId}`).setAttribute("style", "background-color:green")
+    setTimeout(function () {
         nextQuestion();
     }, 1000);
 }
 
-$(document).ready(function () {
-
+function preset() {
+    total = 5;
+    totalQuestions = total;
+    imgCheck = 0;
+    loss = 0;
+    notAnswer=0;
+    wins = 0;
+    number = 5;
+    myrandomNumberArray = [];
+    $('#final-results').empty();
+    $('#score').empty();
     randomNum = randomNumber(1, 5);
     console.log('start', randomNum);
     myrandomNumberArray.push(randomNum);
-
     console.log('first time', myrandomNumberArray[0])
-
     questionScreenSetUp(randomNum);
-
+}
+$(document).ready(function () {
+    preset();
     $(document.body).on("click", ".mybuttons .options", function () {
+        stop();
         var userGuess = $(this).text();
         answerId = $(this).attr("id");
         validateAnswer(userGuess, randomNum, answerId);
+    });
+
+    $(document.body).on("click", "#restart", function () {
+        preset();
     });
 });
