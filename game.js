@@ -6,7 +6,6 @@ const questions = [{
         ans4: 'Baseball',
         correctanswer: 'Basketball',
     },
-
     {
         q: 'Which record label did Michael Jackson first record on?',
         ans1: 'Wotown',
@@ -86,8 +85,7 @@ const questions = [{
         ans3: 'Lake Trillion',
         ans4: 'Lake ellior',
         correctanswer: 'Lake Superior',
-    },
-    validateAnswer
+    }
 ]
 
 var total,
@@ -157,10 +155,7 @@ function ignoreDuplicates() {
 function nextQuestion() {
     $('#result-section').attr("src", "");
     if (total < 1) {
-        $('#score').empty();
-        // $('.myquestion').hide();
-        // $('.options').hide();
-        // $('#result-section').hide(); 
+        $('#score').empty(); 
         resetQScreen();
         console.log(total);
         $('#final-results').empty();
@@ -208,7 +203,7 @@ async function validateAnswer(userAnswer, i, answerId) {
 
 function run() {
     clearInterval(intervalId);
-    number = 5;
+    number = 20;
     intervalId = setInterval(decrement, 1000);
 }
 
@@ -216,6 +211,7 @@ function decrement() {
     number--;
     $("#show-number").html("<h2>" + number + "</h2>");
     if (number === 0) {
+        notAnswer++;
         stop();
         findCorrectAnswerDiv();
         total--;
@@ -241,7 +237,7 @@ function preset() {
     loss = 0;
     notAnswer = 0;
     wins = 0;
-    number = 5;
+    number = 20;
     myrandomNumberArray = [];
     $('#final-results').empty();
     $('#score').empty();
